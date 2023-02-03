@@ -1,0 +1,91 @@
+{% extends "base_user_app.html" %}
+
+{% block title %}
+{{ scheme.name }}
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-3">
+        <div class="row mt-4 col-lg-8">
+            <p class="col-sm-3 title">
+                {{ scheme.name }}
+            </p>
+            <div class="col-sm-3 pt-2">
+            <a href="{% url 'user_app:update_schema' pk=scheme.pk %}">Edit scheme</a>
+            </div>
+        </div>
+        <div class="row pt-2 col-lg-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                      <th scope="col-lg-2">#</th>
+                      <th scope="col-lg-5">Column name</th>
+                      <th scope="col-lg-5">Column type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for column in columns %}
+                    <tr>
+                      <th scope="row">{{ column.id }}</th>
+                      <td>{{ column.name }}</td>
+                      <td>{{ column.type }}</td>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+        <div class="row mt-3">
+            <p class="col-sm-6 title">
+                Data sets
+            </p>
+            <form method="GET" class="row col-sm-6">
+                <div class="col-sm-2">
+                    <p class="fs-4">Rows:</p>
+                </div>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="rows">
+                </div>
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-success">
+                        Generate data
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="row mt-2">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                      <th scope="col-lg-2">#</th>
+                      <th scope="col-lg-5">Created</th>
+                      <th scope="col-lg-5">Status</th>
+                      <th scope="col-lg-5">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for file in csv_files %}
+                    <tr>
+                      <th scope="row">{{ file.id }}</th>
+                      <td>{{ file.created|date:'Y-m-d' }}</td>
+                      <td>
+                        {% if file.file %}
+                        <span class="status-ready">Ready</span>
+                        {% else %}
+                        <span class="status-processing">Processing</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        {% if file.file %}
+                        <a href='{{ file.file.url }}'>
+                          Download
+                        </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock%}

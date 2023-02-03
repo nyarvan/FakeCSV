@@ -1,0 +1,45 @@
+{% extends 'base_user_app.html' %}
+
+{% block title %}Schemas{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row mt-4 col-lg-8">
+            <p class="col-sm-10 title">
+                Data schemas
+            </p>
+            <div class="col-sm-2 pt-2">
+            <a href="{% url 'user_app:new_schema' %}" class="btn btn-success">New schema</a>
+            </div>
+        </div>
+        <div class="row pt-2 col-lg-8">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                      <th scope="col-lg-3">#</th>
+                      <th scope="col-lg-3">Title</th>
+                      <th scope="col-lg-3">Modified</th>
+                      <th scope="col-lg-3">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for schema in schemas %}
+                    <tr>
+                      <th scope="row">{{ schema.id }}</th>
+                      <td>
+                        <a href="{% url 'user_app:scheme' pk=schema.pk %}">
+                          {{ schema.name }}
+                        </a>
+                      </td>
+                      <td>{{ schema.modified|date:'Y-m-d' }}</td>
+                      <td>
+                        <a href="{% url 'user_app:update_schema' pk=schema.pk %}" class="">Edit scheme</a>
+                        <a href="{% url 'user_app:delete_schema' pk=schema.pk %}" class="delete_link">Delete</a>
+                    </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

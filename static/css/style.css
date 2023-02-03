@@ -1,0 +1,50 @@
+a {
+    text-decoration: none;
+}
+
+.auth_form {
+    width: 750px;
+    border: 2px solid #E5E5E5;
+    border-radius: 10px;
+}
+
+.auth_form h1 {
+    font-weight: normal;
+}
+
+.auth_form input {
+    width: 400px;
+}
+
+.vertical-center {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0 auto;
+ }
+
+ .title {
+    font-size: 30px;
+ }
+
+ .delete_link {
+    color: red;
+    margin-left: 5%;
+ }
+
+
+.status-ready{
+    color: white;
+    font-size: 15px;
+    background-color: #5CB85C;
+    border-radius: 10px;
+    padding: 5px 13px;
+}
+
+.status-processing{
+    color: white;
+    font-size: 15px;
+    background-color: grey;
+    border-radius: 10px;
+    padding: 5px 13px;
+}

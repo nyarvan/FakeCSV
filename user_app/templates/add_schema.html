@@ -1,0 +1,137 @@
+{% extends 'base_user_app.html' %}
+
+{% block title %}
+    New schema
+{% endblock %}
+
+{% block content %}
+<form method="POST" id="column_form" enctype="multipart/form-data" class="mb-3">
+    {% csrf_token %}
+    <div class="container mt-4">
+        <div class="row">
+                <div class="row">
+                    <p class="col-sm-10 title">
+                        New schema
+                    </p>
+                    <div class="col-sm-2 pt-2">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+                <div class="row col-lg-6">
+                    {% for f in form %}
+                    <div class="mb-3">
+                        {{ f.label_tag }}
+                        {{ f }}
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    <div class="container mt-3">
+            <p class="col-sm-10 title">
+                    Schema columns
+            </p>
+        {% with named_formsets.columns as formset %}
+        {{ formset.management_form }}
+        <script type="text/html" id="columns-template">
+            <div id="columns-__prefix__" class="row mb-3 hide_all">
+                    <div class="col-3">
+                        Column name
+                    </div>
+                    <div class="col-3">
+                        Type
+                    </div>
+                    <div class="col-1">
+                        From
+                    </div>
+                    <div class="col-1">
+                        To
+                    </div>
+                    <div class="col-2">
+                        Order
+                    </div>
+            </div>
+            <div id="columns-__prefix__" class="row mb-3 hide_all">
+                {% with formset.empty_form.visible_fields as fields %}
+                    <div class="col-3">
+                        {{ fields.0 }}
+                    </div>
+                    <div class="col-3">
+                        {{ fields.1 }}
+                    </div>
+                    <div class="col-1">
+                        {{ fields.2 }}
+                    </div>
+                    <div class="col-1">
+                        {{ fields.3 }}
+                    </div>
+                    <div class="col-1">
+                        {{ fields.4 }}
+                    </div>
+                {% endwith %}
+            </div>
+        </script>
+        <div id="item-columns">
+            {% for forms in formset %}
+                {{ forms.management_form }}
+            <div id="columns-{{ forloop.counter0 }}" class="row mb-3 hide_all">
+                {{ forms.id }}
+                <div class="col-3">
+                    Column name
+                </div>
+                <div class="col-3">
+                    Type
+                </div>
+                <div class="col-1">
+                    From
+                </div>
+                <div class="col-1">
+                    To
+                </div>
+                <div class="col-2">
+                    Order
+                </div>
+            </div> 
+            <div id="columns-{{ forloop.counter0 }}" class="row mb-3 hide_all">
+                {{ forms.id }}
+                    <div class="col-3">
+                        {{ forms.name }}
+                    </div>
+                    <div class="col-3">
+                        {{ forms.type }}
+                    </div>
+                    <div class="col-1">
+                        {{ forms.from_range }}
+                    </div>
+                    <div class="col-1">
+                        {{ forms.to_range }}
+                    </div>
+                    <div class="col-1">
+                        {{ forms.order }}
+                    </div>
+                    {% if forms.instance.pk %}
+                    <div class="col-2">
+                        <a href="{% url 'user_app:delete_column' forms.instance.pk %}" class="delete_link">Delete</a>
+                    </div>
+                    {% endif %}
+            </div>
+                {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-3">
+                <a href="#" id="add-columns-button" class="btn btn-primary add-columns">
+                    Add column
+                </a>
+            </div>
+        </div>
+        {% endwith %}
+    </div>
+</form>
+
+
+<script type="text/javascript">
+    
+</script>
+{%endblock%}
