@@ -3,14 +3,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
-from .models import Schema, Column, Type, FileCSV
-from .forms import SchemaForm, ColumnFormSet
 from django.shortcuts import get_object_or_404
 import csv
 import uuid
-from django.http import HttpResponse
 from .utils import generate_row
 from django.conf import settings
+from .models import Schema, Column, Type, FileCSV
+from .forms import SchemaForm, ColumnFormSet
+
 
 
 class SchemaInline():
